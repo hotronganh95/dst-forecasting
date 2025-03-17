@@ -36,7 +36,11 @@ This system uses multiple machine learning models (LSTM, Transformer, TCN, N-BEA
    pip install -r requirements.txt
    ```
 
-3. Download pre-trained models or train your own using the provided scripts.
+3. Download pre-trained models:
+   - Download the checkpoint file from [Google Drive](https://drive.google.com/file/d/1lxDw5fR2DcVKoygFN9sG0DZL06ty_t02/view?usp=sharing)
+   - Place the downloaded file in the `checkpoints/` directory
+
+4. Or train your own models using the provided scripts.
 
 ## Usage
 
