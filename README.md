@@ -1,61 +1,121 @@
-# Geomagnetic Data Prediction System
+# Dst Forecasting System
 
-This system fetches, processes, and predicts geomagnetic disturbance (Dst) values using real-time data from the World Data Center for Geomagnetism, Kyoto.
+A machine learning system for forecasting Disturbance Storm Time (Dst) index values, which are critical for monitoring and predicting geomagnetic storm activity.
+
+## Overview
+
+This system uses multiple machine learning models (LSTM, Transformer, TCN, N-BEATS) to forecast Dst values one hour into the future based on historical geomagnetic data. It can download the latest data or use existing historical data for predictions.
 
 ## Features
 
-- Real-time Dst data fetching and processing
-- Historical data analysis
-- Predictive modeling with:
-  - Base model (Prophet-based fallback)
-  - Support for custom model integration
-- Automated hourly predictions
-- Ground truth validation
+- **Multiple Models**: Supports LSTM, Transformer, TCN, and N-BEATS architectures
+- **Ensemble Forecasting**: Combines predictions from multiple models
+- **Real-time Updates**: Can download the latest Dst data automatically
+- **Visualization**: Generates plots of historical data and forecasts
+- **Evaluation**: Compares model performance using standard metrics
 
-## Installation
+## Setup
 
-1. Clone the repository
+### Prerequisites
+
+- Python 3.8 or higher
+- PyTorch 1.8 or higher
+- NumPy, Pandas, Matplotlib
+- scikit-learn
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/dst-forecasting.git
+   cd dst-forecasting
+   ```
+
 2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Download pre-trained models or train your own using the provided scripts.
 
 ## Usage
 
-Run the main prediction service:
+### Basic Forecasting
+
+Run the forecasting script with default parameters:
+
 ```bash
-python geomag.py
+python forecast_dst.py
 ```
 
-The system will:
-- Sleep until the next hour
-- Fetch latest geomagnetic data
-- Process historical values
-- Make predictions for the next hour
-- Validate against ground truth when available
+This will:
+1. Load the pre-trained models from the default locations
+2. Use historical data from the default path
+3. Generate a forecast for the next hour
+4. Display results in the console and save a visualization
 
-## Custom Model Integration
+### Advanced Options
 
-We encourage contributors to develop custom models that improve upon the base model's performance. To integrate your custom model:
+```bash
+python forecast_dst.py --models lstm,transformer --download --data /path/to/custom/data.csv
+```
 
-1. Follow the implementation guide in [CUSTOMMODELS.md](CUSTOMMODELS.md)
-2. Ensure your model follows the required naming conventions and interfaces
-3. Test against the base model performance
+#### Command Line Arguments
 
-See [CUSTOMMODELS.md](CUSTOMMODELS.md) for detailed specifications and examples.
+- `--lstm`: Path to trained LSTM model (default: `/mnt/e/dst-forecasting/checkpoints/dst_lstm_pytorch.pt`)
+- `--transformer`: Path to trained Transformer model
+- `--tcn`: Path to trained TCN model
+- `--nbeats`: Path to trained N-BEATS model
+- `--data`: Path to historical data CSV (optional, will download if not provided)
+- `--download`: Force download latest data even if historical data is provided
+- `--models`: Comma-separated list of models to use (default: all)
+- `--no-scaling`: Disable data scaling even if no scaler is found
+- `--full-data`: Path to full historical data for creating scaler
 
-## Components
+### Training Models
 
-- `geomag.py`: Main script handling data fetching and processing
-- `geomag_basemodel.py`: Base model implementation and model loading logic
-- `CUSTOMMODELS.md`: Guide for implementing custom prediction models
+To train or retrain the models:
 
-## Requirements
+```bash
+python transformer_model.py
+```
 
-- Python 3.8+
-- Dependencies listed in requirements.txt
-- Internet connection for data fetching
+This will train all model types (LSTM, Transformer, TCN, N-BEATS) using the dataset specified in the script.
 
-## Data Source
+## File Structure
 
-Real-time Dst data is sourced from the [World Data Center for Geomagnetism, Kyoto](https://wdc.kugi.kyoto-u.ac.jp/dst_realtime/).
+- `forecast_dst.py`: Main forecasting script
+- `enhanced_lstm_model.py`: LSTM model implementation and training
+- `transformer_model.py`: Implementation of all models (Transformer, TCN, N-BEATS)
+- `read_dst_data.py`: Utilities for reading and processing Dst data
+- `analyze_dst_data.py`: Data analysis utilities
+- `geomag.py`: Functions for downloading geomagnetic data
+- `checkpoints/`: Pre-trained model files
+- `forecasts/`: Output directory for forecast visualizations
+
+## Model Performance
+
+The system evaluates models using the following metrics:
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- Mean Absolute Error (MAE)
+- Mean Absolute Percentage Error (MAPE)
+
+## Example Output
+
+![Dst Forecast Example](/mnt/e/dst-forecasting/forecasts/example_forecast.png)
+
+The above image shows a sample forecast with historical data (black line) and predictions from different models. The vertical dashed line separates historical data from forecasts.
+
+## License
+
+[Include license information here]
+
+## Contributors
+
+[List contributors here]
+
+## Acknowledgments
+
+- World Data Center for Geomagnetism, Kyoto for providing the Dst index data
+- [Other acknowledgments]
