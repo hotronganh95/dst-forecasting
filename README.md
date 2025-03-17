@@ -6,6 +6,18 @@ A machine learning system for forecasting Disturbance Storm Time (Dst) index val
 
 This system uses multiple machine learning models (LSTM, Transformer, TCN, N-BEATS) to forecast Dst values one hour into the future based on historical geomagnetic data. It can download the latest data or use existing historical data for predictions.
 
+## Project Idea & Motivation
+
+This project was developed to improve geomagnetic storm prediction capabilities through machine learning approaches. My key ideas include:
+
+- **Multi-Model Approach**: Instead of relying on a single model architecture, I implemented multiple models to compare their performance and develop an ensemble approach.
+- **Time Series Features**: Advanced temporal feature engineering to capture cyclical patterns in geomagnetic data at different time scales.
+- **Real-Time Forecasting**: Creating a system that can automatically download the latest data and generate forecasts with minimal latency.
+- **Ensemble Prediction**: Combining the strengths of different model architectures to produce more reliable forecasts.
+- **Interpretability**: Visualizations and metrics that help understand model performance and capture meaningful patterns in the data.
+
+The goal is to provide a tool that can assist researchers and operators in predicting geomagnetic disturbances that may impact technological systems on Earth.
+
 ## Features
 
 - **Multiple Models**: Supports LSTM, Transformer, TCN, and N-BEATS architectures
